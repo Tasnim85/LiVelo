@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 05 fév. 2025 à 21:23
+-- Généré le : mer. 05 fév. 2025 à 22:55
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -31,7 +31,7 @@ CREATE TABLE `user` (
   `idUser` int(100) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `prenom` varchar(100) NOT NULL,
-  `role` varchar(100) NOT NULL,
+  `role` enum('Partner','Client','Delivery person','Admin') NOT NULL,
   `verified` tinyint(1) NOT NULL,
   `adresse` varchar(100) NOT NULL,
   `type_vehicule` varchar(100) NOT NULL,
