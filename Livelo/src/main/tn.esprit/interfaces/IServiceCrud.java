@@ -6,7 +6,6 @@ public interface IServiceCrud<T> {
     // Ajouter un élément
     void add(T t);
 
-    
 
     // Lire tous les éléments
     List<T> getAll();

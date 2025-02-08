@@ -4,11 +4,8 @@
     import models.role_user;
     import models.type_vehicule;
     import services.CrudUser;
-    import utils.MyDatabase;
 
-    import java.sql.Connection;
-
-    public class main {
+    public class mainUser {
         public static void main(String[] args) {
             User user = new User(
                     "Benhassine",
