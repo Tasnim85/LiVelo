@@ -1,4 +1,4 @@
-package main.tn.esprit.test;
+package test;
 
 import main.tn.esprit.models.Categorie;
 import main.tn.esprit.services.CrudCategorie;

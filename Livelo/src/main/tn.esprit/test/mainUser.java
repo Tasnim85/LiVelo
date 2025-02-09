@@ -1,9 +1,9 @@
-package main.tn.esprit.test;
+package test;
 
     import main.tn.esprit.models.User;
     import models.role_user;
     import models.type_vehicule;
-    import main.tn.esprit.services.CrudUser;
+    import services.CrudUser;
 
 
     public class mainUser {
@@ -18,7 +18,7 @@ package main.tn.esprit.test;
                     "tasnim.benhassine@esprit.tn",
                     "123",
                     "28740885",
-                    "11673727"
+                    "17073727"
             );
             CrudUser crudUser = new CrudUser();
             crudUser.delete(18);
