@@ -1,4 +1,4 @@
-package main.tn.esprit.services;
+package services;
 
 import interfaces.IServiceCrud;
 import main.tn.esprit.models.User;
