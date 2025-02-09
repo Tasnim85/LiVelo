@@ -1,9 +1,10 @@
-    package test;
+package main.tn.esprit.test;
 
-    import models.User;
+    import main.tn.esprit.models.User;
     import models.role_user;
     import models.type_vehicule;
-    import services.CrudUser;
+    import main.tn.esprit.services.CrudUser;
+
 
     public class mainUser {
         public static void main(String[] args) {
