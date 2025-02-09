@@ -5,8 +5,7 @@ package main.tn.esprit.services;
 import interfaces.IServiceCrud;
 import main.tn.esprit.models.Categorie;
 import main.tn.esprit.models.User;
-import utils.MyDatabase;
-
+import main.tn.esprit.utils.MyDatabase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
