@@ -1,4 +1,4 @@
-package models;
+package main.tn.esprit.tn.esprit.models;
 
 public enum role_user {
     admin,

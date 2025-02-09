@@ -1,7 +1,7 @@
-package main.tn.esprit.test;
+package main.tn.esprit.tn.esprit.test;
 
-import main.tn.esprit.models.Categorie;
-import main.tn.esprit.services.CrudCategorie;
+import main.tn.esprit.tn.esprit.models.Categorie;
+import main.tn.esprit.tn.esprit.services.CrudCategorie;
 
 public class mainCategorie {
     public static void main(String[] args) {
@@ -12,7 +12,7 @@ public class mainCategorie {
 
         // CRUD pour gérer les catégories
         CrudCategorie crudCategorie = new CrudCategorie();
-       crudCategorie.delete(3);  // Supprimer la catégorie ayant l'ID 1
+        crudCategorie.delete(3);  // Supprimer la catégorie ayant l'ID 1
         crudCategorie.add(nouvelleCategorie);  // Ajouter la nouvelle catégorie
         crudCategorie.getAll();  // Récupérer toutes les catégories
 

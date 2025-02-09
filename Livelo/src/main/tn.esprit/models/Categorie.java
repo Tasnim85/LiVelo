@@ -1,12 +1,13 @@
-package main.tn.esprit.models;
+package main.tn.esprit.tn.esprit.models;
 
 public class Categorie {
 
     private int id_categorie;
-    private String nom,description,url_image;
+    private String nom, description, url_image;
     private int createdBy; // Clé étrangère ya nouha rodbelek
 
-    public Categorie() {}
+    public Categorie() {
+    }
 
     public Categorie(int id_categorie, String description, String url_image, String nom, int createdBy) {
         this.id_categorie = id_categorie;

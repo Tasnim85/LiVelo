@@ -1,17 +1,17 @@
-package main.tn.esprit.services;
+package main.tn.esprit.tn.esprit.services;
 
-import interfaces.IServiceCrud;
-import main.tn.esprit.models.User;
-import models.role_user;
-import models.type_vehicule;
-import utils.MyDatabase;
+import main.tn.esprit.tn.esprit.interfaces.IServiceCrud;
+import main.tn.esprit.tn.esprit.models.User;
+import main.tn.esprit.tn.esprit.models.role_user;
+import main.tn.esprit.tn.esprit.models.type_vehicule;
+import main.tn.esprit.tn.esprit.utils.MyDatabase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrudUser implements IServiceCrud<User> {
-    Connection conn= MyDatabase.getInstance().getConnection();
+    Connection conn = MyDatabase.getInstance().getConnection();
 
     @Override
     public void add(User user) {
@@ -48,9 +48,6 @@ public class CrudUser implements IServiceCrud<User> {
     }
 
 
-
-
-
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -77,7 +74,7 @@ public class CrudUser implements IServiceCrud<User> {
                 String num_tel = rs.getString("num_tel");
                 String cin = rs.getString("cin");
 
-                User user = new User(id,nom, prenom, role, verified, adresse,
+                User user = new User(id, nom, prenom, role, verified, adresse,
                         typeVehicule, email, password, num_tel, cin);
 
                 users.add(user);
@@ -101,7 +98,7 @@ public class CrudUser implements IServiceCrud<User> {
         // Créer la requête SQL avec des paramètres
         String qry = "UPDATE `user` SET `nom` = ?, `prenom` = ?, `role` = ?, `verified` = ?, " +
                 "`adresse` = ?, `type_vehicule` = ?, `email` = ?, `password` = ?, " +
-                "`num_tel` = ?, `cin` = ? WHERE `idUser` ="+user.getId();
+                "`num_tel` = ?, `cin` = ? WHERE `idUser` =" + user.getId();
 
         try (PreparedStatement statement = conn.prepareStatement(qry)) {
             // Remplacer les points d'interrogation par les valeurs
@@ -127,8 +124,6 @@ public class CrudUser implements IServiceCrud<User> {
             e.printStackTrace();
         }
     }
-
-
 
 
     @Override

@@ -1,16 +1,16 @@
-package main.tn.esprit.models;
-import models.role_user;
-import models.type_vehicule;
+package main.tn.esprit.tn.esprit.models;
+
 public class User {
     private int id;
-    private String nom,prenom,adresse,email,num_tel,cin,password;
+    private String nom, prenom, adresse, email, num_tel, cin, password;
     private boolean verified;
     role_user role;
     private type_vehicule type_vehicule;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(int id, String nom, String prenom,role_user role,boolean verified,  String adresse,  models.type_vehicule type_vehicule,String email, String password,String num_tel, String cin) {
+    public User(int id, String nom, String prenom, role_user role, boolean verified, String adresse, main.tn.esprit.tn.esprit.models.type_vehicule type_vehicule, String email, String password, String num_tel, String cin) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -24,7 +24,7 @@ public class User {
         this.type_vehicule = type_vehicule;
     }
 
-    public User(String nom, String prenom, role_user role,boolean verified,String adresse,models.type_vehicule type_vehicule, String email, String password,String num_tel, String cin ) {
+    public User(String nom, String prenom, role_user role, boolean verified, String adresse, main.tn.esprit.tn.esprit.models.type_vehicule type_vehicule, String email, String password, String num_tel, String cin) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -117,11 +117,11 @@ public class User {
         this.role = role;
     }
 
-    public models.type_vehicule getType_vehicule() {
+    public main.tn.esprit.tn.esprit.models.type_vehicule getType_vehicule() {
         return type_vehicule;
     }
 
-    public void setType_vehicule(models.type_vehicule type_vehicule) {
+    public void setType_vehicule(main.tn.esprit.tn.esprit.models.type_vehicule type_vehicule) {
         this.type_vehicule = type_vehicule;
     }
 
