@@ -1,5 +1,6 @@
-package models;
-
+package main.tn.esprit.models;
+import models.role_user;
+import models.type_vehicule;
 public class User {
     private int id;
     private String nom,prenom,adresse,email,num_tel,cin,password;
