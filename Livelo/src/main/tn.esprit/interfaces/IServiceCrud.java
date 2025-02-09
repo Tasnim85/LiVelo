@@ -1,4 +1,4 @@
-package interfaces;
+package main.tn.esprit.interfaces;
 
 import java.util.List;
 
