@@ -1,4 +1,4 @@
-package test;
+package main.tn.esprit.test;
 
     import models.User;
     import models.role_user;
@@ -9,24 +9,24 @@ package test;
     public class mainUser {
         public static void main(String[] args) {
             User user = new User(
-                    "bahloul",
-                    "malak",
-                    role_user.client,
+                    "Benhassine",
+                    "Tasnim",
+                    role_user.delivery_person,
                     true,
                     "tunis",
                     type_vehicule.e_bike,
-                    "malak.bahloul@esprit.tn",
-                    "5555",
+                    "tasnim.benhassine@esprit.tn",
+                    "123",
                     "28740885",
-                    "0000000"
+                    "11673727"
             );
             CrudUser crudUser = new CrudUser();
-            crudUser.delete(22);
+            crudUser.delete(18);
             crudUser.add(user);
             crudUser.getAll();
 
-            user.setAdresse("ariana");
-            user.setEmail("bhl.55@esprit.tn");
+            user.setAdresse("Sousse");
+            user.setEmail("tasnim.sousse@esprit.tn");
             crudUser.update(user);
             crudUser.getAll();
         }

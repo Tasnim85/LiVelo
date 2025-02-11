@@ -1,6 +1,6 @@
-package test;
+package main.tn.esprit.test;
 
-import main.tn.esprit.models.User;
+import models.User;
 import services.CrudUser;
 import models.Commande;
 import models.statutlCommande;
