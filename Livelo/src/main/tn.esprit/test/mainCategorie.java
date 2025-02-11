@@ -1,7 +1,7 @@
 package test;
 
 import main.tn.esprit.models.Categorie;
-import main.tn.esprit.services.CrudCategorie;
+import services.CrudCategorie;
 
 public class mainCategorie {
     public static void main(String[] args) {
