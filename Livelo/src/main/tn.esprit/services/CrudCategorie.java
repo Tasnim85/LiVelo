@@ -3,8 +3,8 @@ package services;
 
 
 import interfaces.IServiceCrud;
-import main.tn.esprit.models.Categorie;
-import main.tn.esprit.models.User;
+import models.Categorie;
+import models.User;
 import main.tn.esprit.utils.MyDatabase;
 import java.sql.*;
 import java.util.ArrayList;

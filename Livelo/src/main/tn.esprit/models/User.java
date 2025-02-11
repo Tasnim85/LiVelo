@@ -1,4 +1,4 @@
-package main.tn.esprit.models;
+package models;
 import models.role_user;
 import models.type_vehicule;
 public class User {

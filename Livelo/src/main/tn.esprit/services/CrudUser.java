@@ -1,10 +1,10 @@
 package services;
 
 import interfaces.IServiceCrud;
-import main.tn.esprit.models.User;
+import models.User;
 import models.role_user;
 import models.type_vehicule;
-import main.tn.esprit.utils.MyDatabase;
+import utils.MyDatabase;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,9 +66,8 @@ public class CrudUser implements IServiceCrud<User> {
                 String prenom = rs.getString("prenom");
                 String roleString = rs.getString("role");
                 String typeVehiculeString = rs.getString("type_vehicule");
-
-                role_user role = role_user.valueOf(roleString);
                 type_vehicule typeVehicule = type_vehicule.valueOf(typeVehiculeString);
+                role_user role = role_user.valueOf(roleString);
 
                 boolean verified = rs.getBoolean("verified");
                 String adresse = rs.getString("adresse");
