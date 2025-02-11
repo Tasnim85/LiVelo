@@ -25,5 +25,6 @@ public class mainCategorie {
         nouvelleCategorie.setDescription("06");
         crudCategorie.update(nouvelleCategorie);  // Mettre à jour la catégorie
         crudCategorie.getAll();  // Récupérer toutes les catégories
+
     }
 }
