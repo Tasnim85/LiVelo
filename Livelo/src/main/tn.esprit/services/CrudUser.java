@@ -1,7 +1,7 @@
-package main.tn.esprit.services;
+package services;
 
 import interfaces.IServiceCrud;
-import main.tn.esprit.models.User;
+import models.User;
 import models.role_user;
 import models.type_vehicule;
 import main.tn.esprit.utils.MyDatabase;
