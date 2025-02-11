@@ -1,32 +1,32 @@
-package main.tn.esprit.test;
+package test;
 
-    import main.tn.esprit.models.User;
+    import models.User;
     import models.role_user;
     import models.type_vehicule;
-    import main.tn.esprit.services.CrudUser;
+    import services.CrudUser;
 
 
     public class mainUser {
         public static void main(String[] args) {
             User user = new User(
-                    "Benhassine",
-                    "Tasnim",
-                    role_user.delivery_person,
+                    "bahloul",
+                    "malak",
+                    role_user.client,
                     true,
                     "tunis",
                     type_vehicule.e_bike,
-                    "tasnim.benhassine@esprit.tn",
-                    "123",
+                    "malak.bahloul@esprit.tn",
+                    "5555",
                     "28740885",
-                    "11673727"
+                    "0000000"
             );
             CrudUser crudUser = new CrudUser();
-            crudUser.delete(18);
+            crudUser.delete(22);
             crudUser.add(user);
             crudUser.getAll();
 
-            user.setAdresse("Sousse");
-            user.setEmail("tasnim.sousse@esprit.tn");
+            user.setAdresse("ariana");
+            user.setEmail("bhl.55@esprit.tn");
             crudUser.update(user);
             crudUser.getAll();
         }

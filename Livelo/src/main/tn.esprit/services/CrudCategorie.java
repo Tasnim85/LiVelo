@@ -1,10 +1,10 @@
-package main.tn.esprit.services;
+package services;
 
 
 
 import interfaces.IServiceCrud;
-import main.tn.esprit.models.Categorie;
-import main.tn.esprit.models.User;
+import models.Categorie;
+import models.User;
 import utils.MyDatabase;
 
 import java.sql.*;
