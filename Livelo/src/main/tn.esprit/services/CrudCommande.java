@@ -71,7 +71,7 @@ public class CrudCommande implements interfaces.IServiceCrud<Commande> {
     public void update(Commande commande) {
         // Créer la requête SQL avec des paramètres
         String qry = "UPDATE `commande` SET `adresse_dep` = ?, `adresse_arr` = ?, `type_livraison` = ?, `horaire` = ?, " +
-                "`statut` = ?, `created_by` = ? WHERE `id_commande` ="+10;
+                "`statut` = ?, `created_by` = ? WHERE `id_commande` ="+1;
 
         try (PreparedStatement statement = conn.prepareStatement(qry)) {
             // Remplacer les points d'interrogation par les valeurs
