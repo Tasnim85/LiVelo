@@ -16,12 +16,12 @@ package test;
                     "tunis",
                     type_vehicule.e_bike,
                     "tasnim.benhassine@esprit.tn",
-                    "123",
+                    "123456",
                     "28740885",
-                    "11673727"
+                    "48573727"
             );
             CrudUser crudUser = new CrudUser();
-            crudUser.delete(18);
+            //crudUser.delete(18);
             crudUser.add(user);
             crudUser.getAll();
 
