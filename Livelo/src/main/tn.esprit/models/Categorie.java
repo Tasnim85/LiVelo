@@ -1,4 +1,4 @@
-package main.tn.esprit.models;
+package models;
 
 public class Categorie {
 

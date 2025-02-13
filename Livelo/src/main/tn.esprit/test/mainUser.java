@@ -1,6 +1,6 @@
 package test;
 
-    import main.tn.esprit.models.User;
+    import models.User;
     import models.role_user;
     import models.type_vehicule;
     import services.CrudUser;

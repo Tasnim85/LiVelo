@@ -1,5 +1,7 @@
 package models;
 
+import  models.statutlCommande;
+
 import java.sql.Timestamp;
 
 public class Commande {
