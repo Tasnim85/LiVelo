@@ -1,4 +1,4 @@
-package main.tn.esprit.test;
+package test;
 
 import models.User;
 import services.CrudUser;

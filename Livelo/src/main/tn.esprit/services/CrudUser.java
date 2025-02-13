@@ -5,6 +5,8 @@ import models.User;
 import models.role_user;
 import models.type_vehicule;
 import utils.MyDatabase;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +20,11 @@ public class CrudUser implements IServiceCrud<User> {
         String qry = "INSERT INTO `user` (`nom`, `prenom`, `role`, `verified`, `adresse`, `type_vehicule`, `email`, `password`, `num_tel`, `cin`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = conn.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS)) {
-            // Remplacer les points d'interrogation par les valeurs
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+
+            System.out.println("Mot de passe original : " + user.getPassword());
+            System.out.println("Mot de passe hashé : " + hashedPassword);
+
             statement.setString(1, user.getNom());
             statement.setString(2, user.getPrenom());
             statement.setString(3, user.getRole().toString());
@@ -26,19 +32,17 @@ public class CrudUser implements IServiceCrud<User> {
             statement.setString(5, user.getAdresse());
             statement.setString(6, user.getType_vehicule().toString());
             statement.setString(7, user.getEmail());
-            statement.setString(8, user.getPassword());
+            statement.setString(8, hashedPassword);
             statement.setString(9, user.getNum_tel());
             statement.setString(10, user.getCin());
 
-            // Exécuter l'insertion
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        // Récupérer l'ID généré
                         int generatedId = generatedKeys.getInt(1);
-                        user.setId(generatedId);  // Mettre à jour l'ID de l'utilisateur
-                        System.out.println("User added successfully with ID: " + generatedId);
+                        user.setId(generatedId);
+                        System.out.println("User ajouté avec ID: " + generatedId);
                     }
                 }
             }
@@ -97,25 +101,35 @@ public class CrudUser implements IServiceCrud<User> {
 
     @Override
     public void update(User user) {
-        // Créer la requête SQL avec des paramètres
         String qry = "UPDATE `user` SET `nom` = ?, `prenom` = ?, `role` = ?, `verified` = ?, " +
                 "`adresse` = ?, `type_vehicule` = ?, `email` = ?, `password` = ?, " +
-                "`num_tel` = ?, `cin` = ? WHERE `idUser` ="+user.getId();
+                "`num_tel` = ?, `cin` = ? WHERE `idUser` = ?";
 
         try (PreparedStatement statement = conn.prepareStatement(qry)) {
-            // Remplacer les points d'interrogation par les valeurs
-            statement.setString(1, user.getNom()); // 1er paramètre pour nom
-            statement.setString(2, user.getPrenom()); // 2ème paramètre pour prénom
-            statement.setString(3, user.getRole().toString()); // 3ème paramètre pour role
-            statement.setInt(4, user.isVerified() ? 1 : 0); // 4ème paramètre pour vérification
-            statement.setString(5, user.getAdresse()); // 5ème paramètre pour adresse
-            statement.setString(6, user.getType_vehicule().toString()); // 6ème paramètre pour type_vehicule
-            statement.setString(7, user.getEmail()); // 7ème paramètre pour email
-            statement.setString(8, user.getPassword()); // 8ème paramètre pour mot de passe
-            statement.setString(9, user.getNum_tel()); // 9ème paramètre pour numéro de téléphone
-            statement.setString(10, user.getCin()); // 10ème paramètre pour cin
+            // Si le mot de passe est non vide, on le hash. Sinon, on garde l'ancien.
+            String hashedPassword;
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            } else {
+                // Si tu veux juste garder l'ancien mot de passe, il faut le récupérer depuis la base
+                // Sinon tu peux laisser null ou une chaîne vide selon ton cas
+                System.out.println("Mot de passe vide, mise à jour de l'utilisateur sans changer le mot de passe.");
+                hashedPassword = user.getPassword(); // Optionnel, si tu veux éviter le hash
+            }
 
-            // Exécuter la requête
+            // Remplacer les valeurs dans la requête
+            statement.setString(1, user.getNom());
+            statement.setString(2, user.getPrenom());
+            statement.setString(3, user.getRole().toString());
+            statement.setInt(4, user.isVerified() ? 1 : 0);
+            statement.setString(5, user.getAdresse());
+            statement.setString(6, user.getType_vehicule().toString());
+            statement.setString(7, user.getEmail());
+            statement.setString(8, hashedPassword);
+            statement.setString(9, user.getNum_tel());
+            statement.setString(10, user.getCin());
+            statement.setInt(11, user.getId()); // WHERE idUser = ?
+
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("User updated successfully.");
