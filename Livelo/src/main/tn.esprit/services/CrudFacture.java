@@ -103,4 +103,14 @@ public class CrudFacture  implements IServiceCrud<Facture> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Facture getById(int id) {
+        return null;
     }
+
+    @Override
+    public List<Facture> search(String criteria) {
+        return List.of();
+    }
+}

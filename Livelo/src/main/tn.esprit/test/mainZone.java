@@ -13,14 +13,14 @@ public class mainZone {
                 36.8065,
                 10.1815,
                 5.0f,
-                17, // id_user existant
-                1, // id_livraison existant
-                10  // max de livraisons
+                17,
+                1,
+                10
         );
         crudZone.add(zone1);
         crudZone.getAll();
 
-        // Mise à jour de la première zone
+
         zone1.setRayon(6.5f);
         zone1.setMax(15);
         crudZone.update(zone1);

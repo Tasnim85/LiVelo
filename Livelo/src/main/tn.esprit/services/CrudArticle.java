@@ -134,4 +134,14 @@ public class CrudArticle implements IServiceCrud<Article> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Article getById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Article> search(String criteria) {
+        return List.of();
+    }
 }
