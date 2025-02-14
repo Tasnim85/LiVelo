@@ -51,10 +51,6 @@ public class CrudUser implements IServiceCrud<User> {
         }
     }
 
-
-
-
-
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -64,7 +60,6 @@ public class CrudUser implements IServiceCrud<User> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Récupérer les données de l'utilisateur
                 int id = rs.getInt("idUser");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
@@ -97,7 +92,6 @@ public class CrudUser implements IServiceCrud<User> {
 
         return users;
     }
-
 
     @Override
     public void update(User user) {
@@ -141,9 +135,6 @@ public class CrudUser implements IServiceCrud<User> {
         }
     }
 
-
-
-
     @Override
     public void delete(int id) {
         String qry = "DELETE FROM `user` WHERE `idUser` = " + id;
@@ -155,4 +146,91 @@ public class CrudUser implements IServiceCrud<User> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public User getById(int id) {
+        String query = "SELECT * FROM `user` WHERE `idUser` = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getInt("idUser"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        role_user.valueOf(rs.getString("role")),
+                        rs.getBoolean("verified"),
+                        rs.getString("adresse"),
+                        type_vehicule.valueOf(rs.getString("type_vehicule")),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("num_tel"),
+                        rs.getString("cin")
+                );
+                System.out.println("Utilisateur trouvé : " + user);
+                return user;
+            } else {
+                System.out.println("Aucun utilisateur trouvé avec l'ID : " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> search(String criteria) {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM `user` WHERE `cin` LIKE ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            String searchTerm = "%" + criteria + "%";
+            stmt.setString(1, searchTerm);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("idUser"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        models.role_user.valueOf(rs.getString("role")),  // Fetch the role
+                        rs.getBoolean("verified"),  // Fetch the verified status
+                        rs.getString("adresse"),
+                        models.type_vehicule.valueOf(rs.getString("type_vehicule")),  // Fetch the vehicle type
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("num_tel"),
+                        rs.getString("cin")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (users.isEmpty()) {
+            System.out.println("Aucun utilisateur trouvé pour le critère : " + criteria);
+        } else {
+            System.out.println("Nombre d'utilisateurs trouvés : " + users.size());
+            for (User user : users) {
+                System.out.println("Utilisateur trouvé : ");
+                System.out.println("Nom: " + user.getNom());
+                System.out.println("Prénom: " + user.getPrenom());
+                System.out.println("Role: " + user.getRole());
+                System.out.println("Vérifié: " + user.isVerified());
+                System.out.println("Adresse: " + user.getAdresse());
+                System.out.println("Type de véhicule: " + user.getType_vehicule());
+                System.out.println("Email: " + user.getEmail());
+                System.out.println("Numéro de téléphone: " + user.getNum_tel());
+                System.out.println("CIN: " + user.getCin());
+                System.out.println();
+            }
+        }
+
+        return users;
+    }
+
+
+
+
 }

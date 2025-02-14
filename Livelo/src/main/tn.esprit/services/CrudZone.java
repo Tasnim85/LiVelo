@@ -113,4 +113,14 @@ public class CrudZone implements IServiceCrud<Zone> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Zone getById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Zone> search(String criteria) {
+        return List.of();
+    }
 }

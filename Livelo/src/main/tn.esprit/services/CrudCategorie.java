@@ -108,4 +108,14 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Categorie getById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Categorie> search(String criteria) {
+        return List.of();
+    }
 }

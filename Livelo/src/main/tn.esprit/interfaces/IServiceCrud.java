@@ -15,4 +15,10 @@ public interface IServiceCrud<T> {
 
     // Supprimer un élément
     void delete(int id);
+
+    T getById(int id);
+
+    List<T> search(String criteria);
+
+
 }

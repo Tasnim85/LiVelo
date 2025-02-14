@@ -104,4 +104,14 @@ public class CrudCommande implements interfaces.IServiceCrud<Commande> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Commande getById(int id) {
+        return null;
     }
+
+    @Override
+    public List<Commande> search(String criteria) {
+        return List.of();
+    }
+}
