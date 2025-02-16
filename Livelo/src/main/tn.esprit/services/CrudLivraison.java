@@ -16,7 +16,7 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
 
     @Override
     public void add(Livraison livraison) {
-        String qry = "INSERT INTO livraison (commande_Id, created_by, created_at, facture_Id) VALUES (?, ?, ?, ?)";
+        String qry = "INSERT INTO livraison (commandeId, created_by, created_at, factureId) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstm = cnx.prepareStatement(qry)) {
             pstm.setInt(1, livraison.getCommandeId());
             pstm.setInt(2, livraison.getCreatedBy());
@@ -30,7 +30,7 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
     }
     @Override
     public  void delete(int idLivraison) {
-        String qry = "DELETE FROM `livraison` WHERE `id`=?";
+        String qry = "DELETE FROM `livraison` WHERE `idLivraison`=?";
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(qry)) {
             preparedStatement.setInt(1, idLivraison);
@@ -54,11 +54,11 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
         try (Statement stm = cnx.createStatement(); ResultSet rs = stm.executeQuery(qry)) {
             while (rs.next()) {
                 Livraison l = new Livraison(
-                        rs.getInt("id"),
-                        rs.getInt("commande_Id"),
+                        rs.getInt("idLivraison"),
+                        rs.getInt("commandeId"),
                         rs.getInt("created_by"),
                         rs.getTimestamp("created_at"),
-                        rs.getInt("facture_Id")
+                        rs.getInt("factureId")
                 );
                 livraisons.add(l);
             }
@@ -70,7 +70,7 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
 
     @Override
     public void update(Livraison livraison) {
-        String qry = "UPDATE livraison SET commande_Id = ?, created_by = ?, created_at = ?, facture_Id = ? WHERE id = ?";
+        String qry = "UPDATE livraison SET commandeId = ?, created_by = ?, created_at = ?, factureId = ? WHERE idLivraison = ?";
         try (PreparedStatement statement = cnx.prepareStatement(qry)) {
             statement.setInt(1, livraison.getCommandeId());
             statement.setInt(2, livraison.getCreatedBy());
@@ -91,17 +91,17 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
 
     @Override
     public Livraison getById(int id) {
-        String qry = "SELECT * FROM livraison WHERE id = ?";
+        String qry = "SELECT * FROM livraison WHERE idLivraison = ?";
         try (PreparedStatement statement = cnx.prepareStatement(qry)) {
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     return new Livraison(
-                            rs.getInt("id"),
-                            rs.getInt("commande_Id"),
+                            rs.getInt("idLivraison"),
+                            rs.getInt("commandeId"),
                             rs.getInt("created_by"),
                             rs.getTimestamp("created_at"),
-                            rs.getInt("facture_Id")
+                            rs.getInt("factureId")
                     );
                 }
             }
@@ -114,7 +114,7 @@ public class CrudLivraison implements IServiceCrud<Livraison> {
 
     public List<Livraison> search(String criteria) {
         List<Livraison> results = new ArrayList<>();
-        String qry = "SELECT * FROM livraison WHERE commande_Id LIKE ? OR created_by LIKE ?";
+        String qry = "SELECT * FROM livraison WHERE id_commande LIKE ? OR created_by LIKE ?";
         try (PreparedStatement statement = cnx.prepareStatement(qry)) {
             statement.setString(1, "%" + criteria + "%");
             statement.setString(2, "%" + criteria + "%");

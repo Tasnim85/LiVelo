@@ -10,26 +10,42 @@ public class MainLivraison {
     public static void main(String[] args) {
         CrudLivraison serviceLivraison = new CrudLivraison();
 
+        Livraison livraison1= new Livraison(
+                2,
+                22,
+                new Date(),
+                2
+        );
 
-        // Test d'ajout d'une nouvelle livraison
-        serviceLivraison.add(new Livraison(1, 2, 1, new Date(), 1));
+        Livraison livraison2= new Livraison(
+                2,
+                17,
+                new Date(),
+                2
+        );
+        serviceLivraison.add(livraison1);
+        serviceLivraison.add(livraison2);
+        serviceLivraison.getAll();
 
-        // Test de suppression d'une livraison
-        serviceLivraison.delete(4);
-
-        // Test de mise à jour d'une livraison existante
-        serviceLivraison.update(new Livraison(1, 4, 5, new Date(), 5));
+        livraison1.setCreatedBy(17);
+        serviceLivraison.update(livraison1);
+        System.out.println(serviceLivraison.getAll());
 
 
-        // Test de récupération d'une livraison par ID
-        Livraison livraison = serviceLivraison.getById(5);
+        serviceLivraison.delete(1);
+        System.out.println(serviceLivraison.getAll());
+
+        //serviceLivraison.update(new Livraison(1, 17, new Date(), 2));
+
+
+       Livraison livraison = serviceLivraison.getById(2);
         if (livraison != null) {
             System.out.println("Test get by ID : " + livraison);
         } else {
             System.out.println("Aucune livraison trouvée avec cet ID.");
         }
 
-        System.out.println(serviceLivraison.getAll());
+       // System.out.println(serviceLivraison.getAll());
     }
 
 }

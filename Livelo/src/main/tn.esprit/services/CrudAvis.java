@@ -89,7 +89,7 @@ public class CrudAvis implements IServiceCrud<Avis> {
 
     @Override
     public void update(Avis avis) {
-        String qry = "UPDATE `Avis` SET `createdBy`=?, `deliveryId`=?, `createdDate`=?, `comment`=? WHERE `id`=?";
+        String qry = "UPDATE `Avis` SET `created_by`=?, `LivraisonId`=?, `created_at`=?, `description`=? WHERE `idAvis`=?";
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(qry)) {
             preparedStatement.setInt(1, avis.getCreatedBy());
@@ -114,7 +114,7 @@ public class CrudAvis implements IServiceCrud<Avis> {
 
     @Override
     public void delete(int idReview) {
-        String qry = "DELETE FROM `Avis` WHERE `id`=?";
+        String qry = "DELETE FROM `Avis` WHERE `idAvis`=?";
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(qry)) {
             preparedStatement.setInt(1, idReview);

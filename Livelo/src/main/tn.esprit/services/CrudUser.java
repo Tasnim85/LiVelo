@@ -100,15 +100,13 @@ public class CrudUser implements IServiceCrud<User> {
                 "`num_tel` = ?, `cin` = ? WHERE `idUser` = ?";
 
         try (PreparedStatement statement = conn.prepareStatement(qry)) {
-            // Si le mot de passe est non vide, on le hash. Sinon, on garde l'ancien.
             String hashedPassword;
             if (user.getPassword() != null && !user.getPassword().isEmpty()) {
                 hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
             } else {
-                // Si tu veux juste garder l'ancien mot de passe, il faut le récupérer depuis la base
-                // Sinon tu peux laisser null ou une chaîne vide selon ton cas
+
                 System.out.println("Mot de passe vide, mise à jour de l'utilisateur sans changer le mot de passe.");
-                hashedPassword = user.getPassword(); // Optionnel, si tu veux éviter le hash
+                hashedPassword = user.getPassword();
             }
 
             // Remplacer les valeurs dans la requête
@@ -122,7 +120,7 @@ public class CrudUser implements IServiceCrud<User> {
             statement.setString(8, hashedPassword);
             statement.setString(9, user.getNum_tel());
             statement.setString(10, user.getCin());
-            statement.setInt(11, user.getId()); // WHERE idUser = ?
+            statement.setInt(11, user.getId());
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
