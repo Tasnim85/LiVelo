@@ -1,7 +1,6 @@
 package services;
 
-import models.Commande;
-import models.statutlCommande;
+import models.*;
 import utils.MyDatabase;
 
 import java.sql.*;
@@ -107,11 +106,67 @@ public class CrudCommande implements interfaces.IServiceCrud<Commande> {
 
     @Override
     public Commande getById(int id) {
+        String query = "SELECT * FROM `commande` WHERE `id_commande` = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Commande commande = new Commande(
+                        rs.getInt("id_commande"),
+                        rs.getString("adresse_dep"),
+                        rs.getString("adresse_arr"),
+                        rs.getString("type_livraison"),
+                        rs.getTimestamp("horaire"),
+                        statutlCommande.valueOf(rs.getString("statut")),
+                        rs.getInt("created_by")
+                );
+                System.out.println("Commande trouvé : " + commande);
+                return commande;
+            } else {
+                System.out.println("Aucune commande trouvé avec l'ID : " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public List<Commande> search(String criteria) {
-        return List.of();
+        List<Commande> commandes = new ArrayList<>();
+        String query = "SELECT * FROM `commande` WHERE `type_livraison` LIKE ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            String searchTerm = "%" + criteria + "%";
+            stmt.setString(1, searchTerm);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Commande commande = new Commande(
+                        rs.getInt("id_commande"),
+                        rs.getString("adresse_dep"),
+                        rs.getString("adresse_arr"),
+                        rs.getString("type_livraison"),
+                        rs.getTimestamp("horaire"),
+                        statutlCommande.valueOf(rs.getString("statut")),
+                        rs.getInt("created_by")
+                );
+                commandes.add(commande);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (commandes.isEmpty()) {
+            System.out.println("Aucun utilisateur trouvé pour le critère : " + criteria);
+        } else {
+            System.out.println("Nombre d'utilisateurs trouvés : " + commandes.size());
+            for (Commande commande : commandes) {
+                System.out.println("Commande trouvé : ");
+                System.out.println(commande.toString());
+            }
+        }
+
+        return commandes;
     }
 }

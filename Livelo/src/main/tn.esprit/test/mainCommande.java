@@ -20,14 +20,16 @@ public class mainCommande {
                 17
         );
         CrudCommande crudCommande = new CrudCommande();
-        crudCommande.add(commande);
+       /* crudCommande.add(commande);
         System.out.println(crudCommande.getAll());
         crudCommande.delete(13);
         System.out.println(crudCommande.getAll());
 
         commande.setAdresse_arr("kelibia");
         commande.setCreated_by(19);
-        crudCommande.update(commande);
+        crudCommande.update(commande);*/
+        //crudCommande.getById(5);
+        //crudCommande.search("E-Bile");
         System.out.println(crudCommande.getAll());
     }
     }
