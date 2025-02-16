@@ -1,16 +1,19 @@
 package models;
+
 import models.role_user;
 import models.type_vehicule;
+
 public class User {
     private int id;
-    private String nom,prenom,adresse,email,num_tel,cin,password;
+    private String nom, prenom, adresse, email, num_tel, cin, password;
     private boolean verified;
     role_user role;
     private type_vehicule type_vehicule;
 
-    public User(){}
+    public User() {}
 
-    public User(int id, String nom, String prenom,role_user role,boolean verified,  String adresse,  models.type_vehicule type_vehicule,String email, String password,String num_tel, String cin) {
+    // Constructeur avec type_vehicule
+    public User(int id, String nom, String prenom, role_user role, boolean verified, String adresse, type_vehicule type_vehicule, String email, String password, String num_tel, String cin) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -24,7 +27,35 @@ public class User {
         this.type_vehicule = type_vehicule;
     }
 
-    public User(String nom, String prenom, role_user role,boolean verified,String adresse,models.type_vehicule type_vehicule, String email, String password,String num_tel, String cin ) {
+    // Constructeur sans type_vehicule
+    public User(String nom, String prenom, role_user role, boolean verified, String adresse, String email, String password, String num_tel, String cin) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.email = email;
+        this.num_tel = num_tel;
+        this.cin = cin;
+        this.password = password;
+        this.verified = false;
+        this.role = role;
+        this.type_vehicule = null; // Pas de type de véhicule
+    }
+
+    // Constructeur avec type_vehicule
+    public User(String nom, String prenom, String adresse, String email, String num_tel, String cin, String password, role_user role, type_vehicule type_vehicule) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.email = email;
+        this.num_tel = num_tel;
+        this.cin = cin;
+        this.password = password;
+        this.role = role;
+        this.type_vehicule = type_vehicule;
+    }
+
+    // Constructeur par défaut
+    public User(String nom, String prenom, String adresse, String email, String num_tel, String cin, String password, boolean verified, role_user role, type_vehicule type_vehicule) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -37,6 +68,7 @@ public class User {
         this.type_vehicule = type_vehicule;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -117,11 +149,11 @@ public class User {
         this.role = role;
     }
 
-    public models.type_vehicule getType_vehicule() {
+    public type_vehicule getType_vehicule() {
         return type_vehicule;
     }
 
-    public void setType_vehicule(models.type_vehicule type_vehicule) {
+    public void setType_vehicule(type_vehicule type_vehicule) {
         this.type_vehicule = type_vehicule;
     }
 
