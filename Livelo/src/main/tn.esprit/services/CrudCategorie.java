@@ -1,10 +1,11 @@
 package services;
 
 
-
+import models.statut_article;
 import interfaces.IServiceCrud;
 import models.Categorie;
 import models.User;
+import models.Article;
 import utils.MyDatabase;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
 
     @Override
     public void add(Categorie cat) {
-        String qry = "INSERT INTO `categorie` (`nom`, `description`, `url_image`, `created_by`) VALUES (?, ?, ?, ?)";
+        String qry = "INSERT INTO categorie (nom, description, url_image, created_by) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = conn.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, cat.getNom());
@@ -42,7 +43,7 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
     @Override
     public List<Categorie> getAll() {
         List<Categorie> categories = new ArrayList<>();
-        String query = "SELECT * FROM `categorie`";
+        String query = "SELECT * FROM categorie";
 
         try (PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -55,6 +56,33 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
                 int createdBy = rs.getInt("created_by");
 
                 Categorie categorie = new Categorie(id, nom, description, urlImage, createdBy);
+
+                // Récupérer les articles associés à cette catégorie
+                String articleQuery = "SELECT * FROM article WHERE id_categorie = ?";
+                try (PreparedStatement articleStmt = conn.prepareStatement(articleQuery)) {
+                    articleStmt.setInt(1, id);
+                    try (ResultSet articleRs = articleStmt.executeQuery()) {
+                        List<Article> articles = new ArrayList<>();
+                        while (articleRs.next()) {
+                            Article article = new Article(
+                                    articleRs.getInt("id_article"),
+                                    articleRs.getString("url_image"),
+                                    categorie, // 🔹 Référence à la catégorie
+                                    articleRs.getString("nom"),
+                                    articleRs.getFloat("prix"),
+                                    articleRs.getString("description"),
+                                    articleRs.getInt("created_by"),
+                                    articleRs.getInt("quantite"),
+                                    statut_article.valueOf(articleRs.getString("statut")), // Convertir String en enum
+                                    articleRs.getDate("createdAt"),
+                                    articleRs.getInt("nbViews")
+                            );
+                            articles.add(article);
+                        }
+                        categorie.setArticles(articles);
+                    }
+                }
+
                 categories.add(categorie);
             }
 
@@ -71,7 +99,7 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
 
     @Override
     public void update(Categorie cat) {
-        String qry = "UPDATE `categorie` SET `nom` = ?, `description` = ?, `url_image` = ?, `created_by` = ? WHERE `id_categorie` = ?";
+        String qry = "UPDATE categorie SET nom = ?, description = ?, url_image = ?, created_by = ? WHERE id_categorie = ?";
 
         try (PreparedStatement statement = conn.prepareStatement(qry)) {
             statement.setString(1, cat.getNom());
@@ -93,14 +121,22 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
 
     @Override
     public void delete(int id_categorie) {
-        String qry = "DELETE FROM `categorie` WHERE `id_categorie` = ?";
+        // Supprimer les articles associés à cette catégorie
+        String deleteArticlesQuery = "DELETE FROM article WHERE id_categorie = ?";
+        try (PreparedStatement articleStmt = conn.prepareStatement(deleteArticlesQuery)) {
+            articleStmt.setInt(1, id_categorie);
+            articleStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        try (PreparedStatement statement = conn.prepareStatement(qry)) {
-            statement.setInt(1, id_categorie);
-            int rowsAffected = statement.executeUpdate();
-
+        // Supprimer la catégorie
+        String deleteCategorieQuery = "DELETE FROM categorie WHERE id_categorie = ?";
+        try (PreparedStatement categorieStmt = conn.prepareStatement(deleteCategorieQuery)) {
+            categorieStmt.setInt(1, id_categorie);
+            int rowsAffected = categorieStmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Catégorie supprimée avec succès.");
+                System.out.println("Catégorie et articles associés supprimés avec succès.");
             } else {
                 System.out.println("Aucune catégorie trouvée avec l'ID " + id_categorie);
             }
@@ -111,11 +147,95 @@ public class CrudCategorie implements IServiceCrud<Categorie> {
 
     @Override
     public Categorie getById(int id) {
+        String query = "SELECT * FROM categorie WHERE id_categorie = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Categorie categorie = new Categorie(
+                        rs.getInt("id_categorie"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getString("url_image"),
+                        rs.getInt("created_by")
+                );
+
+
+                String articleQuery = "SELECT * FROM article WHERE id_categorie = ?";
+                try (PreparedStatement articleStmt = conn.prepareStatement(articleQuery)) {
+                    articleStmt.setInt(1, id);
+                    try (ResultSet articleRs = articleStmt.executeQuery()) {
+                        List<Article> articles = new ArrayList<>();
+                        while (articleRs.next()) {
+                            Article article = new Article(
+                                    articleRs.getInt("id_article"),
+                                    articleRs.getString("url_image"),
+                                    categorie, // 🔹 Référence à la catégorie
+                                    articleRs.getString("nom"),
+                                    articleRs.getFloat("prix"),
+                                    articleRs.getString("description"),
+                                    articleRs.getInt("created_by"),
+                                    articleRs.getInt("quantite"),
+                                    statut_article.valueOf(articleRs.getString("statut")),
+                                    articleRs.getDate("createdAt"),
+                                    articleRs.getInt("nbViews")
+                            );
+                            articles.add(article);
+                        }
+                        categorie.setArticles(articles);
+                    }
+                }
+
+                System.out.println("Catégorie trouvée : " + categorie);
+                return categorie;
+            } else {
+                System.out.println("Aucune catégorie trouvée avec l'ID : " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-
     @Override
     public List<Categorie> search(String criteria) {
-        return List.of();
+        List<Categorie> categories = new ArrayList<>();
+        String query = "SELECT * FROM categorie WHERE nom LIKE ? OR description LIKE ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            String searchTerm = "%" + criteria + "%";
+            stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Categorie categorie = new Categorie(
+                        rs.getInt("id_categorie"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getString("url_image"),
+                        rs.getInt("created_by")
+                );
+                categories.add(categorie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (categories.isEmpty()) {
+            System.out.println("Aucune catégorie trouvée pour le critère : " + criteria);
+        } else {
+            System.out.println("Nombre de catégories trouvées : " + categories.size());
+            for (Categorie categorie : categories) {
+                System.out.println("Catégorie trouvée : ");
+                System.out.println("ID: " + categorie.getId_categorie());
+                System.out.println("Nom: " + categorie.getNom());
+                System.out.println("Description: " + categorie.getDescription());
+                System.out.println("URL Image: " + categorie.getUrl_image());
+                System.out.println("Créée par (ID utilisateur): " + categorie.getCreatedBy());
+                System.out.println();
+            }
+        }
+
+        return categories;
     }
 }

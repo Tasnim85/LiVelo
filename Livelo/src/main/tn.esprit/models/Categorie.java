@@ -1,13 +1,17 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Categorie {
     private int id_categorie;
     private String nom;
     private String description;
     private String url_image;
     private int createdBy;
+    private List<Article> articles = new ArrayList<>(); // 🔹 Relation One-to-Many avec Article
 
-    // **Constructeur pour l'affichage avec ID**
+
     public Categorie(int id_categorie, String nom, String description, String url_image, int createdBy) {
         this.id_categorie = id_categorie;
         this.nom = nom;
@@ -15,8 +19,11 @@ public class Categorie {
         this.url_image = url_image;
         this.createdBy = createdBy;
     }
+    public Categorie(int id_categorie, String nom) {
+        this.id_categorie = id_categorie;
+        this.nom = nom;
+    }
 
-    // **Constructeur pour l'ajout sans ID**
     public Categorie(String nom, String description, String url_image, int createdBy) {
         this.nom = nom;
         this.description = description;
@@ -24,7 +31,6 @@ public class Categorie {
         this.createdBy = createdBy;
     }
 
-    // **Getters et Setters**
     public int getId_categorie() {
         return id_categorie;
     }
@@ -65,7 +71,20 @@ public class Categorie {
         this.createdBy = createdBy;
     }
 
-    // **Redéfinition de toString pour affichage**
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
+    public void addArticle(Article article) {
+        this.articles.add(article);
+        article.setCategorie(this);
+    }
+
+
     @Override
     public String toString() {
         return "Categorie{" +
@@ -74,6 +93,7 @@ public class Categorie {
                 ", description='" + description + '\'' +
                 ", url_image='" + url_image + '\'' +
                 ", createdBy=" + createdBy +
+                ", articles=" + articles + // 🔹
                 '}';
     }
 }
