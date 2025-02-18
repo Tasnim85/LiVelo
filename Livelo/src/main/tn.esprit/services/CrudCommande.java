@@ -12,7 +12,69 @@ public class CrudCommande implements interfaces.IServiceCrud<Commande> {
 
     @Override
     public void add(Commande commande) {
-        //create Qry SQL
+        String qry = "INSERT INTO `commande`(`adresse_dep`, `adresse_arr`, `type_livraison`, `horaire`, `statut`, `created_by`) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try {
+            conn.setAutoCommit(false); // Démarre la transaction
+
+            // Préparer la déclaration pour l'insertion de la commande avec récupération de la clé générée
+            PreparedStatement pstm = conn.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
+            pstm.setString(1, commande.getAdresse_dep());
+            pstm.setString(2, commande.getAdresse_arr());
+            pstm.setString(3, commande.getType_livraison());
+            pstm.setTimestamp(4, commande.getHoraire());
+            pstm.setString(5, commande.getStatut().toString());
+            pstm.setInt(6, commande.getCreated_by());
+
+            // Exécuter l'insertion de la commande
+            pstm.executeUpdate();
+
+            // Récupérer la clé générée (ID de la commande)
+            ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int commandeId = generatedKeys.getInt(1); // Obtenir l'ID généré
+                System.out.println("Generated Commande ID: " + commandeId);
+
+                // Mettre à jour l'ID de la commande dans l'objet Commande
+                commande.setId_Commande(commandeId);
+
+                // Vérifier si la liste des articles est vide
+                if (commande.getArticles() != null && !commande.getArticles().isEmpty()) {
+                    // Insérer dans la table de jointure pour chaque article associé
+                    String joinQry = "INSERT INTO `articlecommande`(`idArticle`, `idCommande`) VALUES (?, ?)";
+                    PreparedStatement joinPstm = conn.prepareStatement(joinQry);
+
+                    // Boucle sur les articles et insertion dans la table de jointure
+                    for (Article article : commande.getArticles()) {
+                        System.out.println("Inserting Article ID: " + article.getIdArticle());
+                        joinPstm.setInt(1, article.getIdArticle()); // Utiliser l'ID de l'article
+                        joinPstm.setInt(2, commandeId); // Utiliser l'ID de la commande
+                        joinPstm.executeUpdate();
+                    }
+                } else {
+                    System.out.println("No articles to insert for Commande ID: " + commandeId);
+                }
+            } else {
+                System.out.println("No generated key obtained.");
+            }
+
+            conn.commit(); // Valider la transaction
+        } catch (SQLException e) {
+            try {
+                conn.rollback(); // Annuler en cas d'erreur
+            } catch (SQLException rollbackEx) {
+                System.out.println("Rollback failed: " + rollbackEx.getMessage());
+            }
+            System.out.println("SQL Exception: " + e.getMessage());
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Réinitialiser le mode auto-commit
+            } catch (SQLException e) {
+                System.out.println("Failed to reset auto-commit: " + e.getMessage());
+            }
+        }
+    }
+        /*//create Qry SQL
         //execute Qry
         String qry ="INSERT INTO `commande`(`adresse_dep`, `adresse_arr`, `type_livraison`,`horaire`,`statut`,`created_by`) VALUES (?,?,?,?,?,?)";
         try {
@@ -24,11 +86,29 @@ public class CrudCommande implements interfaces.IServiceCrud<Commande> {
             pstm.setString(5, commande.getStatut().toString());
             pstm.setInt(6,commande.getCreated_by());
             pstm.executeUpdate();
+            // Retrieve the generated key (ID of the inserted commande)
+            ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int commandeId = generatedKeys.getInt(1);
+                System.out.println("Generated Commande ID: " + commandeId);
 
+                // Now insert into the join table for each associated article
+                try {
+                    String joinQry = "INSERT INTO `articlecommande`(`idArticle`, `idCommande`) VALUES (?,?)";
+                    PreparedStatement joinPstm = conn.prepareStatement(joinQry);
+
+                    for (Article article : commande.getArticles()) {
+                        joinPstm.setInt(1, article.getIdArticle());
+                        joinPstm.setInt(2, commandeId);
+                        joinPstm.executeUpdate();
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
-    }
+        }*/
 
     @Override
     public List<Commande> getAll() {

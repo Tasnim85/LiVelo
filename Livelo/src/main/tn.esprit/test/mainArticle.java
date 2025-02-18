@@ -23,8 +23,8 @@ public class mainArticle {
 
 
         Article article = new Article(
-                0,
                 "https://example.com/image.jpg",
+                6,
                 categorie,
                 "Casque Bluetooth",
                 120.99f,

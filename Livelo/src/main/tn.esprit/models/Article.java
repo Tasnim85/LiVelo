@@ -1,6 +1,14 @@
 package models;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+
+
 
 import java.util.Date;
+import java.util.List;
 
 public class Article {
     private int idArticle, createdBy, quantite, nbViews;
@@ -8,7 +16,11 @@ public class Article {
     private float prix;
     private statut_article statut;
     private Date createdAt;
+
+    private List<Commande> commandes=new ArrayList<Commande>();
+
     private Categorie categorie;
+
 
     public Article() {}
 
@@ -112,6 +124,17 @@ public class Article {
     public void setStatut(statut_article statut) {
         this.statut = statut;
     }
+
+
+    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL)
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
 
     public Date getCreatedAt() {
         return createdAt;
