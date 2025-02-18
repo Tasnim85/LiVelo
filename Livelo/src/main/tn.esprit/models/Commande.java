@@ -1,6 +1,12 @@
 package models;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Commande {
     private int id_Commande;
@@ -11,6 +17,7 @@ public class Commande {
     private statutlCommande statut;
     private int created_by;
 
+    private List<Article> articles=new ArrayList<Article>();
     public Commande(int id_Commande, String adresse_dep, String adresse_arr, String type_livraison, Timestamp horaire, statutlCommande statut, int created_by) {
         this.id_Commande = id_Commande;
         this.adresse_dep = adresse_dep;
@@ -31,6 +38,19 @@ public class Commande {
     }
 
     public Commande() {
+    }
+    @ManyToMany(cascade ={ CascadeType.ALL,CascadeType.MERGE})
+    @JoinTable(
+            name="articlecommande",
+            joinColumns = @JoinColumn(name="idCommande"),
+            inverseJoinColumns = @JoinColumn(name="idArticle")
+    )
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     public int getId_Commande() {

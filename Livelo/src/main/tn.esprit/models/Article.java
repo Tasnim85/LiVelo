@@ -1,5 +1,11 @@
 package models;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Article {
     private int idArticle,idCategorie,createdBy,quantite,nbViews;
@@ -7,7 +13,7 @@ public class Article {
     private float prix;
     statut_article statut;// ENUM ('on_stock', 'out_of_stock')
     private Date createdAt;
-
+    private List<Commande> commandes=new ArrayList<Commande>();
 
     public Article() {}
 
@@ -113,6 +119,14 @@ public class Article {
         this.statut = statut;
     }
 
+    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL)
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

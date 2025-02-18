@@ -13,11 +13,11 @@ public class mainArticle {
 
         Article article = new Article(
                 "https://example.com/image.jpg",
-                4,
+                6,
                 "Casque Bluetooth",
                 120.99f,
                 "Casque sans fil avec réduction de bruit",
-                25,
+                50,
                 10,
                 statut_article.on_stock,
                 new Date(),

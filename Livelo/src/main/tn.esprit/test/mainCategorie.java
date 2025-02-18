@@ -10,7 +10,7 @@ public class mainCategorie {
                 "nom",
                 "description y",
                 "img1.jpg",
-                17
+                50
         );
 
         CrudCategorie crudCategorie = new CrudCategorie();
