@@ -1,45 +1,45 @@
 package models;
+
 import java.util.Date;
 
 public class Article {
-    private int idArticle,idCategorie,createdBy,quantite,nbViews;
-    private String urlImage,nom,description;
+    private int idArticle, createdBy, quantite, nbViews;
+    private String urlImage, nom, description;
     private float prix;
-    statut_article statut;// ENUM ('on_stock', 'out_of_stock')
+    private statut_article statut;
     private Date createdAt;
-
+    private Categorie categorie;
 
     public Article() {}
 
-    public Article(int idArticle, String urlImage, int idCategorie, String nom, float prix,
+    public Article(int idArticle, String urlImage, Categorie categorie, String nom, float prix,
                    String description, int createdBy, int quantite, statut_article statut, Date createdAt, int nbViews) {
         this.idArticle = idArticle;
         this.urlImage = urlImage;
-        this.idCategorie = idCategorie;
+        this.categorie = categorie;
         this.nom = nom;
         this.prix = prix;
         this.description = description;
         this.createdBy = createdBy;
         this.quantite = quantite;
-        this.statut = statut; // Corrected here
+        this.statut = statut;
         this.createdAt = createdAt;
         this.nbViews = nbViews;
     }
 
-    public Article(String urlImage, int idCategorie, String nom, float prix,
+    public Article(String urlImage, Categorie categorie, String nom, float prix,
                    String description, int createdBy, int quantite, statut_article statut, Date createdAt, int nbViews) {
         this.urlImage = urlImage;
-        this.idCategorie = idCategorie;
+        this.categorie = categorie;
         this.nom = nom;
         this.prix = prix;
         this.description = description;
         this.createdBy = createdBy;
         this.quantite = quantite;
-        this.statut = statut; // Corrected here
+        this.statut = statut;
         this.createdAt = createdAt;
         this.nbViews = nbViews;
     }
-
 
     public int getIdArticle() {
         return idArticle;
@@ -57,12 +57,12 @@ public class Article {
         this.urlImage = urlImage;
     }
 
-    public int getIdCategorie() {
-        return idCategorie;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     public String getNom() {
@@ -113,7 +113,6 @@ public class Article {
         this.statut = statut;
     }
 
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -135,7 +134,6 @@ public class Article {
         return "Article{" +
                 "idArticle=" + idArticle +
                 ", urlImage='" + urlImage + '\'' +
-                ", idCategorie=" + idCategorie +
                 ", nom='" + nom + '\'' +
                 ", prix=" + prix +
                 ", description='" + description + '\'' +

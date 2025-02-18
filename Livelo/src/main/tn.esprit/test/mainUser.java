@@ -23,8 +23,8 @@ package test;
             );
             CrudUser crudUser = new CrudUser();
             //crudUser.delete(19);
-            //crudUser.add(user);
-            //crudUser.getAll();
+            crudUser.add(user);
+            crudUser.getAll();
 
             /*user.setAdresse("Sousse");
             user.setEmail("tasnim.sousse@esprit.tn");
@@ -35,7 +35,7 @@ package test;
             /*Authentification authentification = new Authentification();
             String token = authentification.login("48475027", "123456");*/
 
-            crudUser.search("48475027");
+           // crudUser.search("48475027");
 
 
 
