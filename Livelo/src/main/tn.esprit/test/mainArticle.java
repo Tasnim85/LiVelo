@@ -1,19 +1,31 @@
 package test;
-import models.statut_article;
 
 import models.Article;
+import models.Categorie;
+import models.statut_article;
 import services.CrudArticle;
-
+import services.CrudCategorie;
 import java.util.Date;
-
-
 
 public class mainArticle {
     public static void main(String[] args) {
 
+
+        CrudCategorie crudCategorie = new CrudCategorie();
+
+
+        Categorie categorie = crudCategorie.getById(7);
+
+        if (categorie == null) {
+            System.out.println("Aucune catégorie trouvée avec cet ID.");
+            return;
+        }
+
+
         Article article = new Article(
                 "https://example.com/image.jpg",
                 6,
+                categorie,
                 "Casque Bluetooth",
                 120.99f,
                 "Casque sans fil avec réduction de bruit",
@@ -23,16 +35,31 @@ public class mainArticle {
                 new Date(),
                 50
         );
-       CrudArticle crudArticle = new CrudArticle();
-        crudArticle.delete(22);
-        crudArticle.add(article);
-        crudArticle.getAll();
 
 
-        article.setPrix(99.99f);
-        article.setQuantite(15);
+        CrudArticle crudArticle = new CrudArticle();
+
+
+
+
+         crudArticle.add(article);
+         crudArticle.delete(8);
+
+        // Mise à jour de l'article
+         article.setPrix(99.99f);
+         article.setQuantite(15);
         article.setStatut(statut_article.out_of_stock);
-        crudArticle.update(article);
+         crudArticle.update(article);
+
+        // Récupération de tous les articles
+        System.out.println("Récupération de tous les articles :");
         crudArticle.getAll();
+
+        // Récupération d'un article spécifique par ID
+        crudArticle.getById(18);
+
+        // Recherche d'articles par nom
+        System.out.println("Recherche d'articles avec le critère 'Casque Bluetooth' :");
+        crudArticle.search("Casque Bluetooth");
     }
 }
