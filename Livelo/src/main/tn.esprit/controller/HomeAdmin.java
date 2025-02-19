@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class HomeAdmin {
@@ -56,5 +57,43 @@ public class HomeAdmin {
             e.printStackTrace();
             System.out.println("Error loading SignUp.fxml.");
         }
+    }
+    @FXML
+    private void logout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SignIn.fxml"));
+            Scene SignInScene = new Scene(loader.load());
+
+            Stage stage = (Stage) anLogout.getScene().getWindow();
+            stage.setScene(SignInScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading SignUp.fxml.");
+        }
+    }
+    @FXML
+    private void NavigateToGestionUsers() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GestionUtilisateurs.fxml"));
+            Scene GestionUtilisateursScene = new Scene(loader.load());
+
+            Stage stage = (Stage) anLogout.getScene().getWindow();
+            stage.setScene(GestionUtilisateursScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading SignUp.fxml.");
+        }
+    }
+
+    public void normalEffect(javafx.scene.input.MouseEvent event) {
+        ((AnchorPane) event.getSource()).setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
+
+    }
+
+    public void hoverEffect(javafx.scene.input.MouseEvent event) {
+        ((AnchorPane) event.getSource()).setStyle("-fx-background-color: lightgrey; -fx-cursor: hand;");
+
     }
 }

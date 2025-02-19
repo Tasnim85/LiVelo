@@ -7,8 +7,8 @@ public class User {
     private int id;
     private String nom, prenom, adresse, email, num_tel, cin, password;
     private boolean verified;
-    role_user role;
-    private type_vehicule type_vehicule;
+    public static role_user role;
+    public static type_vehicule type_vehicule;
 
     public User() {}
 
@@ -22,6 +22,18 @@ public class User {
         this.num_tel = num_tel;
         this.cin = cin;
         this.password = password;
+        this.verified = verified;
+        this.role = role;
+        this.type_vehicule = type_vehicule;
+    }
+
+    public User(String nom, String prenom, String adresse, String email, String num_tel, String cin, boolean verified, role_user role, models.type_vehicule type_vehicule) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.email = email;
+        this.num_tel = num_tel;
+        this.cin = cin;
         this.verified = verified;
         this.role = role;
         this.type_vehicule = type_vehicule;

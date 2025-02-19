@@ -140,6 +140,7 @@ public class CrudUser implements IServiceCrud<User> {
             // Exécuter la requête
             statement.executeUpdate();
             System.out.println("User deleted successfully.");
+            this.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }

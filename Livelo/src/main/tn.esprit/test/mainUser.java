@@ -15,16 +15,16 @@ public class mainUser {
                 "tunis",
                 "tasnim.benhassine1@esprit.tn",
                 "28740885",
-                "48455027",
+                "48422237",
                 "123456",
                 role_user.delivery_person,
                 type_vehicule.e_bike
         );
         CrudUser crudUser = new CrudUser();
-        //crudUser.delete(19);
+
         crudUser.add(user);
         crudUser.getAll();
-
+        crudUser.delete(user.getId());
         /*user.setAdresse("Sousse");
         user.setEmail("tasnim.sousse@esprit.tn");
         crudUser.update(user);

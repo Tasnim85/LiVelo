@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeAdmin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionUtilisateurs">
     <left>
         <AnchorPane prefHeight="610.0" prefWidth="255.0" style="-fx-background-color: #dbefe1;" BorderPane.alignment="CENTER">
             <children>
@@ -67,7 +73,7 @@
                         </ImageView>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="anLogout" layoutX="1.0" layoutY="563.0" prefHeight="45.0" prefWidth="250.0" style="-fx-cursor: hand;">
+                <AnchorPane fx:id="anLogout" layoutX="1.0" layoutY="563.0" prefHeight="45.0" prefWidth="250.0" style="-fx-cursor: hand;" onMouseEntered="#hoverEffect" onMouseExited="#normalEffect" onMouseClicked="#logout">
                     <children>
                         <Text fill="#398c3e" layoutX="69.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout" wrappingWidth="212.07421875">
                             <font>
@@ -134,6 +140,121 @@
         </AnchorPane>
     </top>
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f8f8f8; -fx-border-width: 0;" BorderPane.alignment="CENTER" />
+        <AnchorPane prefHeight="610.0" prefWidth="815.0" style="-fx-background-color: #f8f8f8; -fx-border-width: 0;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="anSearch" layoutX="22.0" layoutY="13.0" prefHeight="41.0" prefWidth="749.0" promptText="Search by cin" style="-fx-background-color: transparent; -fx-border-color: #398c3e; -fx-border-width: 0px 0px 2px 0px;" />
+            <ImageView fitHeight="31.0" fitWidth="22.0" layoutX="742.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/search (1).png" />
+               </image>
+            </ImageView>
+            <HBox layoutX="14.0" layoutY="76.0" prefHeight="504.0" prefWidth="764.0">
+               <children>
+                  <ScrollPane prefHeight="504.0" prefWidth="775.0" styleClass="transparennt">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="501.0" prefWidth="766.0">
+                           <children>
+                              <VBox fx:id="vListUsers" prefHeight="503.0" prefWidth="765.0">
+                                 <children>
+                                    <HBox fx:id="headerhb" prefHeight="28.0" prefWidth="765.0" style="-fx-background-color: #398c3e;">
+                                       <children>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="First Name">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Last name">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="69.0" text="Cin">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Address">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="119.0" text="Email">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="71.0" text="Role">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Verified">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Transport">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="hbHedha" prefHeight="32.0" prefWidth="765.0">
+                                       <children>
+                                          <Label fx:id="lblPrenom" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="First Name">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblNom" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Last name">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblCin" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Cin">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblAdress" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Address">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblEmail" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Email">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblRole" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Role">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblVerified" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Verified">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblTransport" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="102.0" text="Transport">
+                                             <font>
+                                                <Font name="Bodoni MT" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
+         </children></AnchorPane>
     </center>
 </BorderPane>
